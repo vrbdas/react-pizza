@@ -1,7 +1,13 @@
-.site-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+@use './variables.scss';
+
+.footer {
+  padding: 30px 0;
+  background-color: variables.$color-dark-gray;
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   &__title {
     color: #fff;
     display: flex;

@@ -1,27 +1,17 @@
-import TheSiteHeader from '@/components/TheSiteHeader.jsx';
-import TheSiteFooter from '@/components/TheSiteFooter.jsx';
-import TheCatalog from '@/components/TheCatalog.jsx';
-import TheFilters from '@/components/TheFilters.jsx';
+import { Outlet } from 'react-router-dom';
+import TheHeader from '@/components/TheHeader.jsx';
+import TheFooter from '@/components/TheFooter.jsx';
 
 export default function Root() {
   return (
     <>
-      <header>
-        <div className="container">
-          <TheSiteHeader />
-        </div>
-      </header>
+      <TheHeader />
       <main>
         <div className="container">
-          <TheFilters />
-          <TheCatalog />
+          <Outlet />
         </div>
       </main>
-      <footer>
-        <div className="container">
-          <TheSiteFooter />
-        </div>
-      </footer>
+      <TheFooter />
     </>
   );
 }

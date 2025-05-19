@@ -11,20 +11,19 @@ export default function TheCatalog() {
   const sortFunctions = {
     rating: {
       ascending: (a, b) => a.rating - b.rating,
-      descending: (a, b) => b.rating - a.rating
+      descending: (a, b) => b.rating - a.rating,
     },
     price: {
       ascending: (a, b) => a.price - b.price,
-      descending: (a, b) => b.price - a.price
+      descending: (a, b) => b.price - a.price,
     },
     title: {
       ascending: (a, b) => a.title.localeCompare(b.title),
-      descending: (a, b) => b.title.localeCompare(a.title)
-    }
+      descending: (a, b) => b.title.localeCompare(a.title),
+    },
   };
-  
-  catalogFilteredSorted = catalogFiltered.sort(sortFunctions[sort][order]);
 
+  catalogFilteredSorted = catalogFiltered.sort(sortFunctions[sort][order]);
   return (
     <>
       <section className="catalog">
