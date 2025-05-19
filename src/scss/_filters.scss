@@ -1,0 +1,76 @@
+@use './variables.scss';
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 0 32px 0;
+  &__btns {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  &__btn {
+    height: 46px;
+    border: none;
+    border-radius: 30px;
+    background-color: variables.$color-light-gray;
+    padding: 0 2em;
+    cursor: pointer;
+    font-weight: 600;
+    &.active {
+      background-color: variables.$color-dark-gray;
+      color: variables.$color-white;
+    }
+  }
+  &__sort {
+    min-width: 255px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &__sort-arrow-btn {
+    width: 20px;
+    height: 20px;
+    &.down {
+      transform: rotate(180deg);
+    }
+  }
+  &__sort-arrow-img {
+    &.down {
+      transform: rotate(180deg);
+    }
+  }
+  &__sort-label {
+    font-weight: 600;
+  }
+  &__sort-select {
+    color: variables.$color-orange;
+    border-bottom: 1px dotted variables.$color-orange;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  &__sort-options {
+    z-index: 1;
+    background-color: variables.$color-white;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.09);
+    padding: 14px 0;
+  }
+  &__sort-option {
+    cursor: pointer;
+    min-height: 38px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    color: variables.$color-black;
+    &.active {
+      background-color: rgba(254, 95, 30, 0.05);
+      color: variables.$color-orange;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+@use './variables.scss';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  &__title {
+    font-size: 20px;
+  }
+  &__descr {
+    flex-grow: 1;
+    color: variables.$color-gray;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  &__options {
+    background-color: variables.$color-light-gray;
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 7px;
+  }
+  &__dough,
+  &__size {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+  }
+  &__dough-item,
+  &__size-item {
+    height: 32px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    cursor: pointer;
+    &.active {
+      border-radius: 5px;
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+      background: variables.$color-white;
+    }
+  }
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__price {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  &__btn {
+    border: 1px solid variables.$color-orange;
+    border-radius: 30px;
+    padding: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: variables.$color-orange;
+    font-weight: 600;
+  }
+  &__btn-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background-color: variables.$color-orange;
+    border-radius: 100%;
+    color: variables.$color-white;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}

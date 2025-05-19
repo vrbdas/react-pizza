@@ -1,11 +1,27 @@
-import './App.css';
+import TheSiteHeader from '@/components/TheSiteHeader.jsx';
+import TheSiteFooter from '@/components/TheSiteFooter.jsx';
+import TheCatalog from '@/components/TheCatalog.jsx';
+import TheFilters from '@/components/TheFilters.jsx';
 
-function App() {
-    return (
-        <>
-            <h1>Hello world</h1>
-        </>
-    );
+export default function Root() {
+  return (
+    <>
+      <header>
+        <div className="container">
+          <TheSiteHeader />
+        </div>
+      </header>
+      <main>
+        <div className="container">
+          <TheFilters />
+          <TheCatalog />
+        </div>
+      </main>
+      <footer>
+        <div className="container">
+          <TheSiteFooter />
+        </div>
+      </footer>
+    </>
+  );
 }
-
-export default App;

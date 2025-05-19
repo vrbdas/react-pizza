@@ -1,0 +1,15 @@
+@use './variables.scss';
+
+.catalog {
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: variables.$color-black;
+  }
+  &__items {
+    padding: 35px 0 65px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 280px);
+    gap: 65px 35px;
+  }
+}

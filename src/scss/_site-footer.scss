@@ -1,0 +1,26 @@
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &__title {
+    color: #fff;
+    display: flex;
+    gap: 10px;
+    strong {
+      font-weight: 800;
+    }
+  }
+  &__links {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 50px;
+    justify-content: center;
+  }
+  &__social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
