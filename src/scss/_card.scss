@@ -14,7 +14,7 @@
     line-height: 20px;
   }
   &__options {
-    background-color: variables.$color-light-gray;
+    background-color: variables.$color-gray-light;
     border-radius: 10px;
     padding: 6px;
     display: flex;
@@ -54,6 +54,7 @@
     font-weight: 600;
   }
   &__btn {
+    height: 46px;
     border: 1px solid variables.$color-orange;
     border-radius: 30px;
     padding: 11px;

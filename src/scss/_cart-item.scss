@@ -1,0 +1,61 @@
+@use './variables.scss';
+
+.cart-item {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 3fr repeat(3, 1fr);
+  gap: 20px;
+  &__content {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  &__img {
+    width: 80px;
+    height: 80px;
+    grid-row: span 2;
+  }
+  &__title {
+    margin-bottom: 3px;
+    font-size: 18px;
+    font-weight: 600;
+    color: variables.$color-black;
+  }
+  &__descr {
+    color: variables.$color-gray;
+    font-weight: 400;
+  }
+  &__quant {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  &__quant-btn {
+    width: 32px;
+    height: 32px;
+    border: 2px solid variables.$color-orange;
+    color: variables.$color-black;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__price {
+    justify-self: end;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  &__remove {
+    justify-self: end;
+    width: 32px;
+    height: 32px;
+    border: 2px solid variables.$color-gray-medium;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

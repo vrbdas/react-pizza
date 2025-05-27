@@ -1,7 +1,7 @@
 @use './variables.scss';
 
 .header {
-  border-bottom: 1px solid variables.$color-light-gray;
+  border-bottom: 1px solid variables.$color-gray-light;
   padding: 49px 0 40px 0;
   &__inner {
     display: flex;

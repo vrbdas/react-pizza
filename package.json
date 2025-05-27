@@ -7,9 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit --watch",
+    "dev:strict": "concurrently -n VITE,TS -c yellow,cyan \"npm run dev\" \"npm run type-check\""
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
+    "@react-google-maps/api": "^2.20.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.6.0",
@@ -17,15 +21,20 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
+    "@types/geojson": "^7946.0.16",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
     "@vitejs/plugin-react-swc": "^3.8.0",
-    "eslint": "^9.22.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.27.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "sass-embedded": "^1.87.0",
+    "typescript": "^5.8.3",
     "vite": "^6.3.1"
   }
 }

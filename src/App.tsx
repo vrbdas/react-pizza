@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import TheHeader from '@/components/TheHeader.jsx';
-import TheFooter from '@/components/TheFooter.jsx';
+import TheHeader from '@/components/TheHeader';
+import TheFooter from '@/components/TheFooter';
 
-export default function Root() {
+export default function App() {
   return (
     <>
       <TheHeader />

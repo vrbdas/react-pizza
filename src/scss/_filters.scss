@@ -14,12 +14,12 @@
     height: 46px;
     border: none;
     border-radius: 30px;
-    background-color: variables.$color-light-gray;
+    background-color: variables.$color-gray-light;
     padding: 0 2em;
     cursor: pointer;
     font-weight: 600;
     &.active {
-      background-color: variables.$color-dark-gray;
+      background-color: variables.$color-gray-dark;
       color: variables.$color-white;
     }
   }
@@ -32,11 +32,6 @@
   &__sort-arrow-btn {
     width: 20px;
     height: 20px;
-    &.down {
-      transform: rotate(180deg);
-    }
-  }
-  &__sort-arrow-img {
     &.down {
       transform: rotate(180deg);
     }

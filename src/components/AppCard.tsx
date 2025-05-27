@@ -1,20 +1,49 @@
 import { useState } from 'react';
+import IconPlus from '@/icons/IconPlus';
+import useCartStore from '@/stores/cartStore';
 
-export default function AppCard({ id, title, descr, price, image }) {
-  const [cardOptions, setCardOptions] = useState({
+interface AppCardProps {
+  id: number;
+  title: string;
+  descr: string;
+  price: number;
+  image: string;
+}
+
+export default function AppCard({ id, title, descr, price, image }: AppCardProps) {
+  const cartStore = useCartStore();
+
+  const [cardOptions, setCardOptions] = useState<{
+    id: number;
+    dough: string;
+    size: number;
+  }>({
     id: id,
     dough: 'standart',
     size: 30,
   });
 
-  const sizes = [25, 30, 35];
-
-  function cardDoughClick(dough) {
+  function cardDoughClick(dough: string) {
     setCardOptions({ ...cardOptions, dough: dough });
   }
 
-  function cardSizeClick(size) {
+  function cardSizeClick(size: number) {
     setCardOptions({ ...cardOptions, size: size });
+  }
+
+  function btnClick() {
+    cartStore.addItem({
+      id: cardOptions.id,
+      dough: cardOptions.dough,
+      size: cardOptions.size,
+      quant: 1,
+    });
+  }
+
+  function cartCounter() {
+    return cartStore.cart
+      .filter((item) => item.id === id)
+      .reduce((summ, item) => summ + item.quant, 0);
   }
 
   return (
@@ -60,11 +89,13 @@ export default function AppCard({ id, title, descr, price, image }) {
           </ul>
         </div>
         <div className="card__footer">
-          <p className="card__price">{price} ₽</p>
-          <button className="card__btn">
-            <img src="/icons/plus.svg" alt="plus" />
+          <p className="card__price">{price} ₸</p>
+          <button className="card__btn" onClick={btnClick}>
+            <IconPlus color='#fe5f1e' />
             Добавить
-            <span className="card__btn-quantity">2</span>
+            {cartCounter() > 0 && 
+              <span className="card__btn-quantity">{cartCounter()}</span>
+            }
           </button>
         </div>
       </div>

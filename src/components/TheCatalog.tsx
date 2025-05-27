@@ -1,14 +1,22 @@
-import AppCard from '@/components/AppCard.jsx';
+import AppCard from '@/components/AppCard';
+import useCatalogStore from '@/stores/catalogStore';
 
-import useCatalogStore from '@/stores/catalogStore.js';
+interface CatalogItem {
+  id: number;
+  title: string;
+  descr: string;
+  price: number;
+  image: string;
+  rating: number;
+}
 
 export default function TheCatalog() {
   const { getCatalogFiltered, sort, order } = useCatalogStore();
-  const catalogFiltered = getCatalogFiltered();
+  const catalogFiltered: CatalogItem[] = getCatalogFiltered();
 
-  let catalogFilteredSorted = [];
+  let catalogFilteredSorted: CatalogItem[] = [];
 
-  const sortFunctions = {
+  const sortFunctions: Record<string, Record<string, (a: CatalogItem, b: CatalogItem) => number>> = {
     rating: {
       ascending: (a, b) => a.rating - b.rating,
       descending: (a, b) => b.rating - a.rating,

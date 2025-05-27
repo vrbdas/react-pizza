@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router';
-import App from '@/App.jsx';
-import PageHome from '@/components/PageHome.jsx';
-import PageCart from '@/components/PageCart.jsx';
+import App from '@/App';
+import PageHome from '@/components/PageHome';
+import PageCart from '@/components/PageCart';
+import PageOrder from '@/components/PageOrder';
 
 const router = createBrowserRouter([
   {
@@ -14,9 +15,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'cart',
-        Component: PageCart, 
+        Component: PageCart,
       },
-    ]
+      {
+        path: 'order',
+        Component: PageOrder,
+      },
+    ],
   },
 ]);
 

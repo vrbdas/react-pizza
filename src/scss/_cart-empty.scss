@@ -1,0 +1,35 @@
+@use './variables.scss';
+
+.cart-empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 0;
+  &__title {
+    font-size: 32px;
+    font-weight: 600;
+    color: variables.$color-black;
+    margin-bottom: 20px;
+  }
+  &__subtitle {
+    color: variables.$color-gray;
+    margin-bottom: 47px;
+    text-align: center;
+  }
+  &__img {
+    margin-bottom: 74px;
+  }
+  &__btn {
+    border-radius: 30px;
+    min-width: 211px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: variables.$color-black;
+    color: variables.$color-white;
+  }
+}

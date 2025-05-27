@@ -1,5 +1,5 @@
-import TheFilters from './TheFilters.jsx';
-import TheCatalog from './TheCatalog.jsx';
+import TheFilters from '@/components/TheFilters';
+import TheCatalog from '@/components/TheCatalog';
 
 export default function PageHome() {
   return (

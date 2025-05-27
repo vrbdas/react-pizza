@@ -1,13 +1,49 @@
 import { create } from 'zustand';
 
-const useCatalogStore = create((set) => ({
+export interface CatalogItem {
+  id: number;
+  title: string;
+  descr: string;
+  price: number;
+  image: string;
+  tags: string[];
+  rating: number;
+}
+
+interface CategoryMapItem {
+  id: number;
+  value: string;
+  label: string;
+}
+
+interface SortMapItem {
+  id: number;
+  value: string;
+  label: string;
+}
+
+interface CatalogStoreState {
+  catalog: CatalogItem[];
+  categoryMap: CategoryMapItem[];
+  sortMap: SortMapItem[];
+  category: string;
+  sort: string;
+  order: string;
+  setCategory: (newCategory: string) => void;
+  setSort: (newSort: string) => void;
+  setOrder: (newOrder: string) => void;
+  getCatalogFiltered: () => CatalogItem[];
+  getItem: (id: number) => CatalogItem | undefined;
+}
+
+const useCatalogStore = create<CatalogStoreState>((set) => ({
   catalog: [
     {
       id: 0,
       title: 'Креветка и песто',
       descr:
         'Креветки, томаты, шампиньоны, соус песто, моцарелла, итальянские травы, фирменный томатный соус',
-      price: 679,
+      price: 4070,
       image: '/images/shrimp-pesto.avif',
       tags: ['new'],
       rating: 4.2,
@@ -16,7 +52,7 @@ const useCatalogStore = create((set) => ({
       id: 1,
       title: 'Четыре сыра',
       descr: 'Сыр блю чиз, сыры чеддер и пармезан, моцарелла, фирменный соус альфредо',
-      price: 569,
+      price: 3410,
       image: '/images/four-cheese.avif',
       tags: ['veg'],
       rating: 4.3,
@@ -26,7 +62,7 @@ const useCatalogStore = create((set) => ({
       title: 'Чилл Грилл',
       descr:
         'Цыпленок, маринованные огурчики, красный лук, соус гриль, моцарелла, чеснок, фирменный соус альфредо',
-      price: 549,
+      price: 3290,
       image: '/images/chill-grill.avif',
       tags: ['new'],
       rating: 4.1,
@@ -35,7 +71,7 @@ const useCatalogStore = create((set) => ({
       id: 3,
       title: 'Креветки блю чиз',
       descr: 'Креветки, сыр блю чиз, моцарелла, фирменный соус альфредо',
-      price: 699,
+      price: 4190,
       image: '/images/shrimp-blue-cheese.avif',
       tags: ['new'],
       rating: 4.4,
@@ -44,7 +80,7 @@ const useCatalogStore = create((set) => ({
       id: 4,
       title: 'Сырная',
       descr: 'Моцарелла, сыры чеддер и пармезан, фирменный соус альфредо',
-      price: 339,
+      price: 2030,
       image: '/images/cheese.avif',
       tags: ['veg'],
       rating: 3.9,
@@ -53,7 +89,7 @@ const useCatalogStore = create((set) => ({
       id: 5,
       title: 'Пепперони фреш',
       descr: 'Пикантная пепперони, увеличенная порция моцареллы, томаты, фирменный томатный соус',
-      price: 369,
+      price: 2210,
       image: '/images/pepperoni-fresh.avif',
       tags: [],
       rating: 4.0,
@@ -62,7 +98,7 @@ const useCatalogStore = create((set) => ({
       id: 6,
       title: 'Чоризо фреш',
       descr: 'Острые колбаски чоризо, сладкий перец, моцарелла, фирменный томатный соус',
-      price: 339,
+      price: 2030,
       image: '/images/chorizo-fresh.avif',
       tags: ['hot'],
       rating: 4.2,
@@ -71,7 +107,7 @@ const useCatalogStore = create((set) => ({
       id: 7,
       title: 'Ветчина и грибы',
       descr: 'Ветчина, шампиньоны, увеличенная порция моцареллы, фирменный томатный соус',
-      price: 519,
+      price: 3110,
       image: '/images/ham-mushrooms.avif',
       tags: [],
       rating: 4.1,
@@ -80,7 +116,7 @@ const useCatalogStore = create((set) => ({
       id: 8,
       title: 'Двойной цыпленок',
       descr: 'Цыпленок, моцарелла, фирменный соус альфредо',
-      price: 489,
+      price: 2710,
       image: '/images/double-chicken.avif',
       tags: [],
       rating: 4.0,
@@ -89,7 +125,7 @@ const useCatalogStore = create((set) => ({
       id: 9,
       title: 'Ветчина и сыр ',
       descr: 'Ветчина, моцарелла, фирменный соус альфредо',
-      price: 479,
+      price: 2870,
       image: '/images/ham-cheese.avif',
       tags: [],
       rating: 3.9,
@@ -99,7 +135,7 @@ const useCatalogStore = create((set) => ({
       title: 'Баварская',
       descr:
         'Баварские колбаски, маринованные огурчики, красный лук, томаты, горчичный соус, моцарелла, фирменный томатный соус',
-      price: 579,
+      price: 3470,
       image: '/images/bavarian.avif',
       tags: ['new'],
       rating: 4.3,
@@ -109,7 +145,7 @@ const useCatalogStore = create((set) => ({
       title: 'Аррива!',
       descr:
         'Цыпленок, острые колбаски чоризо, соус бургер, сладкий перец, красный лук, томаты, моцарелла, соус ранч, чеснок',
-      price: 669,
+      price: 4010,
       image: '/images/arriva.avif',
       tags: ['hot'],
       rating: 4.8,
@@ -119,7 +155,7 @@ const useCatalogStore = create((set) => ({
       title: 'Креветки со сладким чили',
       descr:
         'Креветки, ананасы, соус сладкий чили, сладкий перец, моцарелла, фирменный соус альфредо',
-      price: 689,
+      price: 4160,
       image: '/images/shrimp-sweet-chili.avif',
       tags: [],
       rating: 4.7,
@@ -129,7 +165,7 @@ const useCatalogStore = create((set) => ({
       title: 'Бефстроганов',
       descr:
         'Пряная говядина, шампиньоны, ароматный грибной соус, маринованные огурчики, моцарелла, красный лук, фирменный соус альфредо',
-      price: 549,
+      price: 3290,
       image: '/images/beef-stroganoff.avif',
       tags: [],
       rating: 4.2,
@@ -139,7 +175,7 @@ const useCatalogStore = create((set) => ({
       title: 'Карбонара',
       descr:
         'Бекон, сыры чеддер и пармезан, моцарелла, томаты, красный лук, чеснок, фирменный соус альфредо, итальянские травы',
-      price: 659,
+      price: 3950,
       image: '/images/carbonara.avif',
       tags: [],
       rating: 4.8,
@@ -149,7 +185,7 @@ const useCatalogStore = create((set) => ({
       title: 'Жюльен',
       descr:
         'Цыпленок, шампиньоны, ароматный грибной соус, лук, сухой чеснок, моцарелла, смесь сыров чеддер и пармезан, фирменный соус альфредо',
-      price: 619,
+      price: 3710,
       image: '/images/julienne.avif',
       tags: [],
       rating: 4.3,
@@ -158,7 +194,7 @@ const useCatalogStore = create((set) => ({
       id: 16,
       title: 'Песто',
       descr: 'Цыпленок, соус песто, кубики брынзы, томаты, моцарелла, фирменный соус альфредо',
-      price: 649,
+      price: 3910,
       image: '/images/pesto.avif',
       tags: [],
       rating: 4.7,
@@ -168,7 +204,7 @@ const useCatalogStore = create((set) => ({
       title: 'Мясная',
       descr:
         'Цыпленок, ветчина, пикантная пепперони, острые колбаски чоризо, моцарелла, фирменный томатный соус',
-      price: 609,
+      price: 3670,
       image: '/images/meat.avif',
       tags: ['hot'],
       rating: 4.4,
@@ -178,7 +214,7 @@ const useCatalogStore = create((set) => ({
       title: 'Бургер-пицца',
       descr:
         'Ветчина, маринованные огурчики, томаты, красный лук, чеснок, соус бургер, моцарелла, фирменный томатный соус',
-      price: 559,
+      price: 3370,
       image: '/images/burger.avif',
       tags: [],
       rating: 4.2,
@@ -188,7 +224,7 @@ const useCatalogStore = create((set) => ({
       title: 'Сырный цыпленок',
       descr:
         'Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, фирменный соус альфредо, чеснок',
-      price: 669,
+      price: 4010,
       image: '/images/cheese-chicken.avif',
       tags: [],
       rating: 4.5,
@@ -198,7 +234,7 @@ const useCatalogStore = create((set) => ({
       title: 'Фирменная',
       descr:
         'Бекон, митболы, пикантная пепперони, моцарелла, томаты, шампиньоны, сладкий перец, красный лук, чеснок, фирменный томатный соус',
-      price: 829,
+      price: 4970,
       image: '/images/signature.avif',
       tags: [],
       rating: 4.8,
@@ -207,7 +243,7 @@ const useCatalogStore = create((set) => ({
       id: 21,
       title: 'Пепперони',
       descr: 'Пикантная пепперони, увеличенная порция моцареллы, фирменный томатный соус',
-      price: 519,
+      price: 3110,
       image: '/images/pepperoni.avif',
       tags: [],
       rating: 4.3,
@@ -216,7 +252,7 @@ const useCatalogStore = create((set) => ({
       id: 22,
       title: 'Гавайская',
       descr: 'Двойная порция цыпленка, ананасы, моцарелла, фирменный соус альфредо',
-      price: 539,
+      price: 3260,
       image: '/images/hawaiian.avif',
       tags: [],
       rating: 4.1,
@@ -225,7 +261,7 @@ const useCatalogStore = create((set) => ({
       id: 23,
       title: 'Цыпленок барбекю',
       descr: 'Цыпленок, бекон, соус барбекю, красный лук, моцарелла, фирменный томатный соус',
-      price: 679,
+      price: 4070,
       image: '/images/chicken-barbecue.avif',
       tags: [],
       rating: 4.4,
@@ -234,7 +270,7 @@ const useCatalogStore = create((set) => ({
       id: 24,
       title: 'Цыпленок Ранч',
       descr: 'Цыпленок, ветчина, соус ранч, моцарелла, томаты, чеснок, фирменный соус альфредо',
-      price: 699,
+      price: 4190,
       image: '/images/chicken-ranch.avif',
       tags: [],
       rating: 4.5,
@@ -243,7 +279,7 @@ const useCatalogStore = create((set) => ({
       id: 25,
       title: 'Маргарита',
       descr: 'Увеличенная порция моцареллы, томаты, итальянские травы, фирменный томатный соус',
-      price: 529,
+      price: 3220,
       image: '/images/margherita.avif',
       tags: ['veg'],
       rating: 4.0,
@@ -253,7 +289,7 @@ const useCatalogStore = create((set) => ({
       title: 'Диабло',
       descr:
         'Острые колбаски чоризо, острый перец халапеньо, соус барбекю, митболы из говядины, томаты, сладкий перец, красный лук, моцарелла, фирменный томатный соус',
-      price: 679,
+      price: 4070,
       image: '/images/diablo.avif',
       tags: ['hot'],
       rating: 4.6,
@@ -263,7 +299,7 @@ const useCatalogStore = create((set) => ({
       title: 'Колбаски барбекю',
       descr:
         'Острые колбаски чоризо, соус барбекю, томаты, красный лук, моцарелла, фирменный томатный соус',
-      price: 549,
+      price: 3290,
       image: '/images/sausages-barbecue.avif',
       tags: ['hot'],
       rating: 4.3,
@@ -273,7 +309,7 @@ const useCatalogStore = create((set) => ({
       title: 'Двойная пепперони',
       descr:
         'Двойная порция пикантной пепперони, увеличенная порция моцареллы, фирменный томатный соус',
-      price: 639,
+      price: 3710,
       image: '/images/double-pepperoni.avif',
       tags: [],
       rating: 4.4,
@@ -283,7 +319,7 @@ const useCatalogStore = create((set) => ({
       title: 'Четыре сезона',
       descr:
         'Увеличенная порция моцареллы, ветчина, пикантная пепперони, кубики брынзы, томаты, шампиньоны, итальянские травы, фирменный томатный соус',
-      price: 529,
+      price: 3220,
       image: '/images/four-seasons.avif',
       tags: [],
       rating: 4.2,
@@ -293,7 +329,7 @@ const useCatalogStore = create((set) => ({
       title: 'Овощи и грибы',
       descr:
         'Шампиньоны, томаты, сладкий перец, красный лук, кубики брынзы, моцарелла, фирменный томатный соус, итальянские травы',
-      price: 609,
+      price: 3670,
       image: '/images/vegetables-mushrooms.avif',
       tags: ['veg', 'new'],
       rating: 4.1,
@@ -303,7 +339,7 @@ const useCatalogStore = create((set) => ({
       title: 'Фирменная микс',
       descr:
         'Бекон, цыпленок, ветчина, сыр блю чиз, сыры чеддер и пармезан, соус песто, кубики брынзы, томаты, красный лук, моцарелла, фирменный соус альфредо, чеснок, итальянские травы',
-      price: 659,
+      price: 3970,
       image: '/images/signature-mix.avif',
       tags: [],
       rating: 4.6,
@@ -357,16 +393,21 @@ const useCatalogStore = create((set) => ({
 
   order: 'descending',
 
-  setCategory: (newCategory) => set({ category: newCategory }),
+  setCategory: (newCategory: string) => set({ category: newCategory }),
 
-  setSort: (newSort) => set({sort: newSort}),
+  setSort: (newSort: string) => set({ sort: newSort }),
 
-  setOrder: (newOrder) => set({order: newOrder}),
+  setOrder: (newOrder: string) => set({ order: newOrder }),
 
-  getCatalogFiltered: () => {
-    const { catalog, category } = useCatalogStore.getState(); // текущее состояние
-    return category ? catalog.filter((item) => item.tags.includes(category)) : [...catalog]; // возвращает копию каталога, чтобы не изменять оригинал
+  getCatalogFiltered: (): CatalogItem[] => {
+    const { catalog, category } = useCatalogStore.getState();
+    return category ? catalog.filter((item: CatalogItem) => item.tags.includes(category)) : [...catalog];
   },
+
+  getItem: (id: number): CatalogItem | undefined => {
+    const { catalog } = useCatalogStore.getState();
+    return catalog.find((item: CatalogItem) => item.id === id);
+  }
 }));
 
 export default useCatalogStore;
