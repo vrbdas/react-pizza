@@ -63,12 +63,7 @@ const useCartStore = create<CartStoreState>((set) => ({
     set({ cart: [] });
     localStorage.removeItem('cart');
   },
-
-  // totalPrice: () => {
-  //   const { cart } = useCartStore.getState();
-  //   return cart.reduce((summ, item) => summ + catalogItem(item.id).price * item.quant, 0);
-  // },
-
+  
 }));
 
 

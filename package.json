@@ -12,18 +12,21 @@
     "dev:strict": "concurrently -n VITE,TS -c yellow,cyan \"npm run dev\" \"npm run type-check\""
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@pbe/react-yandex-maps": "^1.2.5",
-    "@react-google-maps/api": "^2.20.6",
+    "axios": "^1.9.0",
+    "firebase": "^11.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.4",
     "react-router-dom": "^7.6.0",
-    "zustand": "^5.0.4"
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@types/geojson": "^7946.0.16",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
+    "@types/yandex-maps": "^2.1.36",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "@vitejs/plugin-react-swc": "^3.8.0",

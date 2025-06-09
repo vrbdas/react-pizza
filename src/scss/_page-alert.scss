@@ -1,6 +1,6 @@
 @use './variables.scss';
 
-.cart-empty {
+.page-alert {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -20,16 +20,5 @@
   }
   &__img {
     margin-bottom: 74px;
-  }
-  &__btn {
-    border-radius: 30px;
-    min-width: 211px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: variables.$color-black;
-    color: variables.$color-white;
   }
 }

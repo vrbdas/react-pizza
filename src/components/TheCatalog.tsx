@@ -1,5 +1,7 @@
 import AppCard from '@/components/AppCard';
 import useCatalogStore from '@/stores/catalogStore';
+import { useLoadCatalog } from '@/hooks/useLoadCatalog';
+import AppCardLoader from '@/components/AppCardLoader';
 
 interface CatalogItem {
   id: number;
@@ -16,7 +18,10 @@ export default function TheCatalog() {
 
   let catalogFilteredSorted: CatalogItem[] = [];
 
-  const sortFunctions: Record<string, Record<string, (a: CatalogItem, b: CatalogItem) => number>> = {
+  const sortFunctions: Record<
+    string,
+    Record<string, (a: CatalogItem, b: CatalogItem) => number>
+  > = {
     rating: {
       ascending: (a, b) => a.rating - b.rating,
       descending: (a, b) => b.rating - a.rating,
@@ -31,22 +36,26 @@ export default function TheCatalog() {
     },
   };
 
-  catalogFilteredSorted = catalogFiltered.sort(sortFunctions[sort][order]);
+  const { catalog, loading } = useLoadCatalog();
+
+  catalogFilteredSorted = [...catalogFiltered].sort(sortFunctions[sort][order]);
+
   return (
     <>
       <section className="catalog">
-        <h2 className="catalog__title">Все пиццы</h2>
         <div className="catalog__items">
-          {catalogFilteredSorted.map((item) => (
-            <AppCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              descr={item.descr}
-              price={item.price}
-              image={item.image}
-            />
-          ))}
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => <AppCardLoader key={i} />)
+            : catalogFilteredSorted.map((item) => (
+                <AppCard
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  descr={item.descr}
+                  price={item.price}
+                  image={item.image}
+                />
+              ))}
         </div>
       </section>
     </>

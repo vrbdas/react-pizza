@@ -1,7 +1,7 @@
 @use './variables.scss';
 
 .cart {
-  padding: 94px 0;
+  padding: 80px 0;
   max-width: 821px;
   margin: 0 auto;
   &__top {
@@ -42,35 +42,18 @@
     justify-content: space-between;
   }
   &__total {
-    font-size: 18px;
+    font-size: 20px;
     span {
-      font-size: 18px;
+      font-size: inherit;
       font-weight: 600;
     }
   }
-  &__summ {
-    font-size: 18px;
+  &__sum {
+    font-size: 20px;
     span {
-      font-size: 18px;
+      font-size: inherit;
       font-weight: 600;
       color: variables.$color-orange;
     }
-  }
-  &__btn {
-    border-radius: 30px;
-    min-width: 211px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  &__btn-back {
-    border: 1px solid variables.$color-gray-medium;
-    color: variables.$color-gray-medium;
-  }
-  &__btn-order {
-    background-color: variables.$color-orange;
-    color: variables.$color-white;
   }
 }

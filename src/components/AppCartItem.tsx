@@ -14,14 +14,15 @@ interface CartItem {
 interface AppCartItemProps {
   item: CartItem;
   index: number;
+  controls?: boolean;
 }
 
-export default function AppCartItem({item, index}: AppCartItemProps) {
+export default function AppCartItem({ item, index, controls = true }: AppCartItemProps) {
   const cartStore = useCartStore();
-  const catalogStore = useCatalogStore();
+  const {getItem} = useCatalogStore();
   const doughText = (dough: string) => (dough === 'standart' ? 'Традиционное' : 'Тонкое');
 
-  const catalogItem = catalogStore.getItem(item.id);
+  const catalogItem = getItem(item.id);
   if (!catalogItem) return null;
 
   function minusClick(item: CartItem, index: number) {
@@ -38,13 +39,9 @@ export default function AppCartItem({item, index}: AppCartItemProps) {
 
   return (
     <>
-      <div className="cart-item" >
+      <div className="cart-item">
         <div className="cart-item__content">
-          <img
-            className="cart-item__img"
-            src={catalogItem.image}
-            alt={catalogItem.title}
-          />
+          <img className="cart-item__img" src={catalogItem.image} alt={catalogItem.title} />
           <div>
             <h3 className="cart-item__title">{catalogItem.title}</h3>
             <p className="cart-item__descr">
@@ -52,19 +49,27 @@ export default function AppCartItem({item, index}: AppCartItemProps) {
             </p>
           </div>
         </div>
-        <div className="cart-item__quant">
-          <button className="cart-item__quant-btn" onClick={() => minusClick(item, index)}>
-            <IconMinus color='#fe5f1e' />
-          </button>
-          {item.quant}
-          <button className="cart-item__quant-btn" onClick={() => plusClick(item, index)}>
-            <IconPlus color='#fe5f1e' />
-          </button>
+        <div className="cart-item__inner-grid">
+          <div className="cart-item__quant">
+            {controls && (
+              <button className="cart-item__quant-btn" onClick={() => minusClick(item, index)}>
+                <IconMinus color="#fe5f1e" />
+              </button>
+            )}
+            <span className="cart-item__quant-value">{item.quant}</span>
+            {controls && (
+              <button className="cart-item__quant-btn" onClick={() => plusClick(item, index)}>
+                <IconPlus color="#fe5f1e" />
+              </button>
+            )}
+          </div>
+          <div className="cart-item__price">{catalogItem.price * item.quant} ₸</div>
+          {controls && (
+            <button className="cart-item__remove" onClick={() => cartStore.deleteItem(index)}>
+              <IconClose />
+            </button>
+          )}
         </div>
-        <div className="cart-item__price">{catalogItem.price * item.quant} ₸</div>
-        <button className="cart-item__remove" onClick={() => cartStore.deleteItem(index)}>
-          <IconClose />
-        </button>
       </div>
     </>
   );

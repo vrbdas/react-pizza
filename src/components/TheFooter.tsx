@@ -1,7 +1,6 @@
 import IconGooglePlay from '@/icons/IconGooglePlay';
 import IconAppStore from '@/icons/IconAppStore';
 import { Link } from 'react-router-dom';
-import AppDeliveryMap from '@/components/AppDeliveryMap';
 
 export default function TheSiteFooter() {
   return (
@@ -13,9 +12,9 @@ export default function TheSiteFooter() {
               <strong>React Pizza</strong>© 2025
             </div>
             <nav className="footer__nav">
-              <Link to="/about" className="footer__link">
-                О нас
-              </Link>
+              <button className="footer__link">
+                Вход
+              </button>
               <Link to="/delivery" className="footer__link">
                 Доставка
               </Link>

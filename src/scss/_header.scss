@@ -22,7 +22,19 @@
   &__logo-subtitle {
     color: variables.$color-gray;
   }
-  &__btn {
+  &__right-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 600;
+    color: variables.$color-gray-dark;
+  }
+  &__cart {
     min-width: 150px;
     height: 50px;
     border-radius: 30px;
@@ -31,16 +43,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
   }
-  &__btn-text {
+  &__cart-text {
     font-weight: 600;
     color: #fff;
   }
-  &__btn-divider {
+  &__cart-divider {
     height: 25px;
     border-left: 1px solid rgba(255, 255, 255, 0.3);
   }
-  &__btn-cart {
+  &__cart-icon {
     display: flex;
     align-items: center;
     gap: 8px;

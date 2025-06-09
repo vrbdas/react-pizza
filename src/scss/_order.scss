@@ -1,1 +1,41 @@
 @use './_variables.scss';
+
+.order {
+  padding: 40px 0;
+  background-color: #fff;
+  color: variables.$color-black;
+  padding: 80px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 80px;
+  &__column {
+    display: flex;
+    flex-direction: column;
+  }
+  &__title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__subtitle {
+    color: variables.$color-gray;
+    margin-bottom: 60px;
+  }
+  &__btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__sum {
+    font-size: 20px;
+    margin-bottom: 20px;
+    span {
+      font-size: inherit;
+      font-weight: 600;
+      color: variables.$color-orange;
+    }
+  }
+}

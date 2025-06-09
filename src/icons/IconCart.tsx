@@ -1,50 +1,21 @@
 interface IconCartProps {
-  color?: string,
-  width?: number,
-  height?: number,
+  color?: string;
+  width?: number;
+  height?: number;
 }
 
-export default function IconCart({ color = '#000', width = 16.466675, height = 16.466675 }: IconCartProps) {
+export default function IconCart({
+  color = '#000',
+  width = 20,
+  height = 20,
+}: IconCartProps) {
   return (
     <>
-      <svg
-        width={width}
-        height={height}
-        viewBox="0 0 16.4667 16.4667"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <desc>Created with Pixso.</desc>
-        <defs />
-        <rect
-          rx="0.000000"
-          width="15.000000"
-          height="15.000000"
-          transform="translate(0.733398 0.733337)"
-          fill="#FFFFFF"
-          fillOpacity="0"
-        />
+      <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 48 48">
+        <path fill="none" d="M0 0h48v48H0z" />
         <path
-          d="M5.56 15.56C4.83 15.56 4.23 14.96 4.23 14.23C4.23 13.49 4.83 12.9 5.56 12.9C6.3 12.9 6.9 13.49 6.9 14.23C6.9 14.96 6.3 15.56 5.56 15.56Z"
-          stroke={color}
-          strokeOpacity="1.000000"
-          strokeWidth="1.800000"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M13.56 15.56C12.83 15.56 12.23 14.96 12.23 14.23C12.23 13.49 12.83 12.9 13.56 12.9C14.3 12.9 14.9 13.49 14.9 14.23C14.9 14.96 14.3 15.56 13.56 15.56Z"
-          stroke={color}
-          strokeOpacity="1.000000"
-          strokeWidth="1.800000"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M4.01 4.23L15.56 4.23L14.44 9.82C14.38 10.13 14.21 10.4 13.97 10.6C13.73 10.8 13.42 10.9 13.11 10.9L6.06 10.9C5.74 10.9 5.42 10.78 5.18 10.57C4.93 10.35 4.77 10.06 4.73 9.73L3.72 2.06C3.67 1.73 3.52 1.44 3.27 1.23C3.03 1.01 2.72 0.9 2.4 0.89L0.9 0.89"
-          stroke={color}
-          strokeOpacity="1.000000"
-          strokeWidth="1.800000"
-          strokeLinejoin="round"
-          strokeLinecap="round"
+          fill={color}
+          d="M8 44h32c2.2 0 4-1.8 4-4V14h-8.18C34.863 8.334 29.934 4 24 4S13.137 8.334 12.181 14H4v26c0 2.2 1.8 4 4 4zM24 8c3.719 0 6.845 2.555 7.737 6H16.263c.892-3.445 4.018-6 7.737-6zM12 18v4h4v-4h16v4h4v-4h4v22H8V18h4z"
         />
       </svg>
     </>

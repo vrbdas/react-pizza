@@ -23,6 +23,9 @@
     color: #fff;
     gap: 50px;
   }
+  &__link {
+    color: variables.$color-white;
+  }
   &__social {
     display: flex;
     align-items: center;

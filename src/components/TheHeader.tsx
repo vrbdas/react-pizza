@@ -3,6 +3,8 @@ import IconLogo from '@/icons/IconLogo';
 import IconCart from '@/icons/IconCart';
 import useCartStore from '@/stores/cartStore';
 import useCatalogStore from '@/stores/catalogStore';
+import IconDelivery from '@/icons/IconDelivery';
+import IconLogin from '@/icons/IconLogin';
 
 export default function TheSiteHeader() {
   const cartStore = useCartStore();
@@ -20,7 +22,7 @@ export default function TheSiteHeader() {
 
   return (
     <>
-      <header className='header'>
+      <header className="header">
         <div className="container">
           <div className="header__inner">
             <Link to="/" className="header__logo">
@@ -30,14 +32,24 @@ export default function TheSiteHeader() {
                 <p className="header__logo-subtitle">самая реактивная пицца</p>
               </div>
             </Link>
-            <Link to="/cart" className="header__btn">
-              <span className="header__btn-text">{totalPrice()} ₸</span>
-              <span className="header__btn-divider"></span>
-              <div className="header__btn-cart">
-                <IconCart color={'#fff'} />
-                <span className="header__btn-text">{totalPizzas()}</span>
-              </div>
-            </Link>
+            <div className="header__right-menu">
+              <button className="header__link">
+                <IconLogin />
+                Вход
+              </button>
+              <Link to="/delivery" className="header__link">
+                <IconDelivery/>
+                Доставка
+              </Link>
+              <Link to="/cart" className="header__cart">
+                <span className="header__cart-text">{totalPrice()} ₸</span>
+                <span className="header__cart-divider"></span>
+                <div className="header__cart-icon">
+                  <IconCart color={'#fff'} />
+                  <span className="header__cart-text">{totalPizzas()}</span>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </header>

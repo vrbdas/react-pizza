@@ -3,8 +3,13 @@
 .cart-item {
   display: grid;
   align-items: center;
-  grid-template-columns: 3fr repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
+  &__inner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+    align-items: center;
+  }
   &__content {
     display: flex;
     gap: 15px;
@@ -17,8 +22,7 @@
   }
   &__title {
     margin-bottom: 3px;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
     color: variables.$color-black;
   }
   &__descr {
@@ -30,8 +34,14 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
+  }
+  &__quant-value {
+    font-size: inherit;
+    font-weight: inherit;
+    min-width: 30px;
+    text-align: center;
   }
   &__quant-btn {
     width: 32px;
@@ -45,7 +55,7 @@
   }
   &__price {
     justify-self: end;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
   }
   &__remove {
