@@ -3,7 +3,7 @@
 .order-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 30px;
   margin-bottom: 60px;
   &__item {
     display: flex;
@@ -17,9 +17,26 @@
     padding: 10px 20px;
     border: 1px solid variables.$color-gray-medium;
     border-radius: 8px;
+    position: relative;
+    color: variables.$color-black;
     &:focus {
       outline: none;
     }
+  }
+  &__input-phone {
+    padding: 10px 20px 10px 40px;
+  }
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  &__input-prefix {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+    color: variables.$color-black;
+    z-index: 1;
   }
   &__address {
     grid-column: span 2;
@@ -34,7 +51,7 @@
     color: variables.$color-orange;
     font-size: 14px;
     position: absolute;
-    bottom: -20px;
+    bottom: -15px;
     width: 100%;
   }
 }

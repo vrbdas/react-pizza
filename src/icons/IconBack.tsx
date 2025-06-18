@@ -1,4 +1,8 @@
-export default function IconBack() {
+interface IconBackProps {
+  color?: string;
+}
+
+export default function IconBack({ color = '#000' }: IconBackProps) {
   return (
     <>
       <svg
@@ -11,7 +15,7 @@ export default function IconBack() {
         <defs />
         <path
           d="M6.74 12.75L0.74 6.68L6.61 0.75"
-          stroke="#7b7b7b"
+          stroke={color}
           strokeOpacity="1.000000"
           strokeWidth="1.500000"
           strokeLinejoin="round"

@@ -15,15 +15,18 @@ interface AppCartItemProps {
   item: CartItem;
   index: number;
   controls?: boolean;
+  small?: boolean;
 }
 
-export default function AppCartItem({ item, index, controls = true }: AppCartItemProps) {
+export default function AppCartItem({ item, index, controls = true, small = false }: AppCartItemProps) {
   const cartStore = useCartStore();
-  const {getItem} = useCatalogStore();
+  const { getItem } = useCatalogStore();
   const doughText = (dough: string) => (dough === 'standart' ? 'Традиционное' : 'Тонкое');
 
   const catalogItem = getItem(item.id);
   if (!catalogItem) return null;
+
+  const isSmall = () => small ? 'small' : '';
 
   function minusClick(item: CartItem, index: number) {
     if (item.quant <= 1) {
@@ -41,16 +44,16 @@ export default function AppCartItem({ item, index, controls = true }: AppCartIte
     <>
       <div className="cart-item">
         <div className="cart-item__content">
-          <img className="cart-item__img" src={catalogItem.image} alt={catalogItem.title} />
+          <img className={`cart-item__img ${isSmall()}`} src={catalogItem.image} alt={catalogItem.title} />
           <div>
-            <h3 className="cart-item__title">{catalogItem.title}</h3>
-            <p className="cart-item__descr">
+            <h3 className={`cart-item__title ${isSmall()}`}>{catalogItem.title}</h3>
+            <p className={`cart-item__descr ${isSmall()}`}>
               {doughText(item.dough)} тесто, {item.size} см
             </p>
           </div>
         </div>
         <div className="cart-item__inner-grid">
-          <div className="cart-item__quant">
+          <div className={`cart-item__quant ${isSmall()}`}>
             {controls && (
               <button className="cart-item__quant-btn" onClick={() => minusClick(item, index)}>
                 <IconMinus color="#fe5f1e" />
@@ -63,10 +66,10 @@ export default function AppCartItem({ item, index, controls = true }: AppCartIte
               </button>
             )}
           </div>
-          <div className="cart-item__price">{catalogItem.price * item.quant} ₸</div>
+          <div className={`cart-item__price ${isSmall()}`}>{catalogItem.price * item.quant} ₸</div>
           {controls && (
             <button className="cart-item__remove" onClick={() => cartStore.deleteItem(index)}>
-              <IconClose />
+              <IconClose color="#7b7b7b" />
             </button>
           )}
         </div>

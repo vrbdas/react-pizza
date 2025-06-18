@@ -6,6 +6,7 @@ import PageOrder from '@/components/PageOrder';
 import PageDelivery from '@/components/PageDelivery';
 import PageNotFound from '@/components/PageNotFound';
 import PageOrderSuccess from '@/components/PageOrderSuccess';
+import PageProfile from '@/components/PageProfile';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'order-success',
         Component: PageOrderSuccess,
+      },
+      {
+        path: 'profile',
+        Component: PageProfile,
       },
       {
         path: '*',

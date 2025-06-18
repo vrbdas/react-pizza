@@ -3,6 +3,7 @@
 .btn {
   border-radius: 30px;
   min-width: 211px;
+  width: fit-content;
   height: 55px;
   display: flex;
   align-items: center;
@@ -10,18 +11,18 @@
   gap: 10px;
 }
 .btn-back {
-  border: 1px solid variables.$color-gray-medium;
+  border: 1px solid variables.$color-gray;
   color: variables.$color-gray;
 }
 .btn-order {
   background-color: variables.$color-orange;
   color: variables.$color-white;
   &:disabled {
-    background-color: variables.$color-gray-medium;
+    background-color: variables.$color-gray;
     cursor: auto;
   }
 }
 .btn-bw {
-  background-color: variables.$color-black;
+  background-color: variables.$color-gray-dark;
   color: variables.$color-white;
 }

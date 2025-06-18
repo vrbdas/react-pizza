@@ -1,14 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import IconLogo from '@/icons/IconLogo';
 import IconCart from '@/icons/IconCart';
 import useCartStore from '@/stores/cartStore';
 import useCatalogStore from '@/stores/catalogStore';
 import IconDelivery from '@/icons/IconDelivery';
 import IconLogin from '@/icons/IconLogin';
+import { useLoadUser } from '@/hooks/useLoadUser';
+import { useLoadCatalog } from '@/hooks/useLoadCatalog';
+import useAuthModalStore from '@/stores/authModalStore';
 
 export default function TheSiteHeader() {
   const cartStore = useCartStore();
   const catalogStore = useCatalogStore();
+
+  const { user } = useLoadUser();
+
+  useLoadCatalog();
+
+  const { setAuthModal } = useAuthModalStore();
+
+  const navigate = useNavigate();
 
   const totalPrice = () => {
     return cartStore.cart.reduce((summ, item) => {
@@ -19,6 +30,18 @@ export default function TheSiteHeader() {
   };
 
   const totalPizzas = () => cartStore.cart.reduce((summ, item) => summ + item.quant, 0);
+
+  function formatPhone(phone: string) {
+    return `${phone.slice(0, 2)} (${phone.slice(2, 5)}) ${phone.slice(5, 8)}-${phone.slice(8, 10)}-${phone.slice(10, 12)}`;
+  }
+
+  function profileClick() {
+    if (user) {
+      navigate('/profile');
+    } else {
+      setAuthModal(true);
+    }
+  }
 
   return (
     <>
@@ -33,12 +56,12 @@ export default function TheSiteHeader() {
               </div>
             </Link>
             <div className="header__right-menu">
-              <button className="header__link">
+              <button onClick={() => profileClick()} className="header__link">
                 <IconLogin />
-                Вход
+                {user ? formatPhone(user.phoneNumber ?? '') : 'Вход'}
               </button>
               <Link to="/delivery" className="header__link">
-                <IconDelivery/>
+                <IconDelivery />
                 Доставка
               </Link>
               <Link to="/cart" className="header__cart">

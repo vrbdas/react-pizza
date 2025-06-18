@@ -19,15 +19,25 @@
     width: 80px;
     height: 80px;
     grid-row: span 2;
+    &.small {
+      width: 40px;
+      height: 40px;
+    }
   }
   &__title {
     margin-bottom: 3px;
     font-size: 20px;
     color: variables.$color-black;
+    &.small {
+      font-size: unset;
+    }
   }
   &__descr {
     color: variables.$color-gray;
     font-weight: 400;
+    &.small {
+      font-size: 14px;
+    }
   }
   &__quant {
     justify-self: end;
@@ -35,7 +45,9 @@
     align-items: center;
     gap: 10px;
     font-size: 20px;
-    font-weight: 600;
+    &.small {
+      font-size: unset;
+    }
   }
   &__quant-value {
     font-size: inherit;
@@ -56,13 +68,15 @@
   &__price {
     justify-self: end;
     font-size: 20px;
-    font-weight: 600;
+    &.small {
+      font-size: unset;
+    }
   }
   &__remove {
     justify-self: end;
     width: 32px;
     height: 32px;
-    border: 2px solid variables.$color-gray-medium;
+    border: 2px solid variables.$color-gray;
     border-radius: 100%;
     display: flex;
     align-items: center;

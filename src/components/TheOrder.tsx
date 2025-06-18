@@ -6,14 +6,22 @@ import useCatalogStore from '@/stores/catalogStore';
 import AppCartItem from '@/components/AppCartItem';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useLoadUser } from '@/hooks/useLoadUser';
 
 export default function TheOrder() {
   const { cart, clearCart } = useCartStore();
+
   const { getItem } = useCatalogStore();
+
   const navigate = useNavigate();
 
+  const { user } = useLoadUser();
+
   const [animationRef] = useAutoAnimate();
+
+  const url = 'https://react-pizza-f1a05-default-rtdb.asia-southeast1.firebasedatabase.app/.json';
 
   const totalPrice = (): number => {
     let sum = 0;
@@ -40,23 +48,35 @@ export default function TheOrder() {
     formState: { errors },
   } = useForm<Inputs>();
 
+  useEffect(() => {
+    reset({
+      name: '',
+      phone: user?.phoneNumber?.slice(2) || '',
+      address: '',
+      comment: '',
+    });
+  }, [user]); // значения по умолчанию из профиля или пустые
+
   const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
 
-    // Заглушка для теста
-    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-    await delay(3000);
+    const newOrderKey = Date.now().toString();
 
-    console.log(data);
+    const orderData = { ...data, phone: `+7${data.phone}`, cart: [...cart] };
+
+    try {
+      axios.patch(url, { [`users/${user?.uid}/orders/${newOrderKey}`]: orderData });
+    } catch (err) {
+      console.log(err);
+    }
+
     reset();
     navigate('/order-success');
     clearCart();
     setLoading(false);
   };
-
-  const phoneRegExp = /^\+([1-9]\d{1,14})$/;
 
   return (
     <>
@@ -67,7 +87,12 @@ export default function TheOrder() {
             Оформление заказа
           </h2>
           <p className="order__subtitle">Заполните форму, чтобы завершить оформление заказа</p>
-          <form className="order-form" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            id="order-form"
+            className="order-form"
+            onSubmit={handleSubmit(onSubmit)}
+            autoComplete="off"
+          >
             <label className="order-form__item">
               Имя
               <input
@@ -81,17 +106,21 @@ export default function TheOrder() {
             </label>
             <label className="order-form__item">
               Номер телефона
-              <input
-                className="order-form__input"
-                type="text"
-                {...register('phone', {
-                  required: 'Введите номер',
-                  pattern: {
-                    value: phoneRegExp,
-                    message: 'Некорректный номер',
-                  },
-                })}
-              />
+              <div className="order-form__input-wrapper">
+                <span className="order-form__input-prefix">+7</span>
+                <input
+                  className="order-form__input order-form__input-phone"
+                  placeholder="XXXXXXXXXX"
+                  maxLength={10}
+                  {...register('phone', {
+                    required: 'Введите номер',
+                    validate: {
+                      checkFormat: (value) => /^[0-9]*$/.test(value) || 'Некорректный номер',
+                      checkLength: (value) => value.length === 10 || 'Номер слишком короткий',
+                    },
+                  })}
+                />
+              </div>
               <div ref={animationRef}>
                 {errors.phone && (
                   <span className="order-form__error" key={errors.phone.message}>
@@ -108,7 +137,9 @@ export default function TheOrder() {
                 {...register('address', { required: 'Введите адрес' })}
               />
               <div ref={animationRef}>
-                {errors.address && <span className="order-form__error">{errors.address.message}</span>}
+                {errors.address && (
+                  <span className="order-form__error">{errors.address.message}</span>
+                )}
               </div>
             </label>
             <label className="order-form__item order-form__comment">
@@ -124,7 +155,7 @@ export default function TheOrder() {
               <IconBack />
               Вернуться назад
             </Link>
-            <button className="btn btn-order" form="my-form" disabled={loading}>
+            <button className="btn btn-order" form="order-form" disabled={loading}>
               Завершить оформление
             </button>
           </div>

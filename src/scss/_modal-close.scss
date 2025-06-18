@@ -1,0 +1,32 @@
+@use './variables.scss';
+
+.modal-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    top: 50%;
+    left: 50%;
+    background: variables.$color-gray-dark;
+    transform-origin: center;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}

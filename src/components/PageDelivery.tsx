@@ -1,5 +1,6 @@
 import AppDeliveryMap from '@/components/AppDeliveryMap';
 import IconDelivery from '@/icons/IconDelivery';
+import { Link } from 'react-router-dom';
 
 export default function PageDelivery() {
   return (
@@ -33,10 +34,11 @@ export default function PageDelivery() {
             <div>
               <h3 className="delivery__subtitle">Как заказать</h3>
               <p className='delivery__text'>
-                По телефону: <span>+7 700 123 45 67</span>
+                По телефону: <span>+7 (727) 123-45-67</span>
               </p>
               <p className='delivery__text'>Или через сайт — просто добавьте пиццу в корзину.</p>
             </div>
+            <Link to="/" className="btn btn-bw">В каталог</Link>
           </div>
           <div className="delivery__map">
             <h3 className="delivery__subtitle">Карта зоны доставки</h3>

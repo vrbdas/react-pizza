@@ -2,15 +2,14 @@ import { Outlet } from 'react-router-dom';
 import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
 import AppModal from '@/components/AppModal';
-import { useState } from 'react';
+import useAuthModalStore from '@/stores/authModalStore';
 
 export default function App() {
+  const { authModal } = useAuthModalStore();
 
-
-  
   return (
     <>
-      <AppModal />
+      {authModal && <AppModal />}
       <TheHeader />
       <main>
         <div className="container">

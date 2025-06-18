@@ -1,14 +1,16 @@
 @use './variables.scss';
 
-.cart {
+.profile {
   padding: 80px 0;
   max-width: 821px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30px;
   }
   &__title {
     font-size: 32px;
@@ -18,42 +20,51 @@
     gap: 15px;
     color: variables.$color-black;
   }
-  &__clear {
+  &__subtitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: variables.$color-black;
+  }
+  &__logout {
     display: flex;
     align-self: center;
     color: variables.$color-gray;
     gap: 5px;
   }
-  &__middle {
-    padding: 30px 0;
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  &__data-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  &__orders {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    margin-bottom: 30px;
   }
-  &__bottom {
+  &__orders-items {
     display: flex;
     flex-direction: column;
     gap: 40px;
   }
-  &__bottom-block {
+  &__orders-item-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  &__total {
-    font-size: 20px;
-    span {
-      font-size: inherit;
-      font-weight: 600;
-    }
+  &__orders-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  &__sum {
+  &__order-title {
     font-size: 20px;
-    span {
-      font-size: inherit;
-      font-weight: 600;
-      color: variables.$color-orange;
-    }
+  }
+  &__order-date {
+    color: variables.$color-gray;
   }
 }
