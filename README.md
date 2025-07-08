@@ -1,12 +1,29 @@
-# React + Vite
+# Сайт пиццерии
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Современный интернет-магазин пиццы с каталогом, фильтрацией, корзиной и авторизацией. Данные и заказы сохраняются в Firebase, а пользовательский профиль запоминает адрес и имя для удобства при следующих заказах.
 
-Currently, two official plugins are available:
+## 🍕 Основной функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Каталог пицц с выбором размера и толщины теста
+- Подгрузка товаров из Firebase Realtime Database
+- Фильтры и сортировка
+- Страница «Доставка» с интерактивной картой и зоной доставки
+- Корзина и оформление заказа
+- Авторизация по номеру телефона (Firebase Auth)
+- Профиль пользователя с историей заказов и редактированием имени и адреса
+- Автоподстановка имени и адреса при повторных заказах
 
-## Expanding the ESLint configuration
+## 🔧 Использованные технологии
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 19** + TypeScript
+- Zustand (глобальное состояние)
+- React Router
+- Firebase Realtime Database + Firebase Auth
+- Axios (работа с API)
+- SCSS + методология БЭМ
+- React Hook Form (валидация форм)
+- React IMask (маска для ввода номера телефона)
+
+## 🔗 Демо
+
+[Открыть сайт](https://pizza.devartmax.ru/)
