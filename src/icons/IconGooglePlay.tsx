@@ -1,4 +1,4 @@
-export default function NewComponent() {
+export default function IconGooglePlay() {
   return (
     <>
       <svg

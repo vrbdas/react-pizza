@@ -2,32 +2,15 @@ import IconLogin from '@/icons/IconLogin';
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import IconLogout from '@/icons/IconLogout';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { auth } from '@/firebase';
-import axios from 'axios';
-import { useLoadUser } from '@/hooks/useLoadUser';
 import AppCartItem from '@/components/AppCartItem';
+import IconEdit from '@/icons/IconEdit';
+import IconSave from '@/icons/IconSave';
+import axios from 'axios';
+import useUserStore from '@/stores/userStore';
 
-type OrderItem = {
-  id: number;
-  size: number;
-  dough: string;
-  quant: number;
-};
-
-type Order = {
-  address: string;
-  cart: OrderItem[];
-  comment: string;
-  name: string;
-  phone: string;
-};
-
-type UserData = {
-  name?: string;
-  address?: string;
-  orders?: Record<string, Order>;
-};
+const url = 'https://react-pizza-f1a05-default-rtdb.asia-southeast1.firebasedatabase.app';
 
 export default function TheProfile() {
   async function handleLogout() {
@@ -38,31 +21,7 @@ export default function TheProfile() {
     }
   }
 
-  const { user } = useLoadUser();
-
-  const url = 'https://react-pizza-f1a05-default-rtdb.asia-southeast1.firebasedatabase.app';
-
-  const [loading, setLoading] = useState(false);
-
-  const [userData, setUserData] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const loadUserData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${url}/users/${user?.uid}.json`);
-        setUserData(response.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadUserData();
-  }, [user]);
+  const { user, userData } = useUserStore();
 
   function formatTimestamp(timestamp: number): string {
     const date = new Date(timestamp);
@@ -75,6 +34,58 @@ export default function TheProfile() {
       minute: '2-digit',
     });
   }
+
+  const [name, setName] = useState('');
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  const [address, setAddress] = useState('');
+  const addressRef = useRef<HTMLInputElement>(null);
+
+  const [edit, setEdit] = useState('');
+
+  function editHandler(input: string) {
+    if (input === 'name') {
+      setEdit('name');
+      nameRef.current?.focus();
+    }
+    if (input === 'address') {
+      setEdit('address');
+      addressRef.current?.focus();
+    }
+  }
+
+  async function saveHandler() {
+    if (!user) return;
+    const token = await user.getIdToken();
+
+    if (edit === 'name') {
+      try {
+        await axios.patch(`${url}/.json?auth=${token}`, { [`users/${user?.uid}/userName`]: name });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (edit === 'address') {
+      try {
+        await axios.patch(`${url}/.json?auth=${token}`, { [`users/${user?.uid}/userAddress`]: address });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    setEdit('');
+  }
+
+  useEffect(() => {
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        saveHandler();
+      }
+    };
+    document.addEventListener('keyup', handleKeyUp);
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [name, address]);
 
   return (
     <>
@@ -90,27 +101,68 @@ export default function TheProfile() {
           </button>
         </div>
 
-        {userData && (
+        {user && (
           <div className="profile__data">
             <h3 className="profile__subtitle">Данные профиля</h3>
             <div className="profile__data-items">
               <div className="profile__data-item">
-                <p>Ваш номер телефона: {user?.phoneNumber}</p>
+                <p className="profile__data-text-gray">Ваш номер телефона: </p>
               </div>
               <div className="profile__data-item">
-                <p>Ваше имя: {userData?.name}</p>
-                <input className="profile__input" type="text" placeholder="Введите имя" />
-                <button>{userData?.name ? 'Изменить' : 'Добавить'}</button>
+                <p className="profile__data-text">{user?.phoneNumber}</p>
+              </div>
+              <div className="profile__data-item"></div>
+              <div className="profile__data-item">
+                <p className="profile__data-text-gray">Ваше имя: </p>
               </div>
               <div className="profile__data-item">
-                <p>Ваш адрес доставки: {userData?.address}</p>
-                <input className="profile__input" type="text" placeholder="Введите адрес" />
-                <button>{userData?.address ? 'Изменить' : 'Добавить'}</button>
+                <input
+                  defaultValue={userData?.userName || ''}
+                  ref={nameRef}
+                  className="profile__input"
+                  type="text"
+                  readOnly={edit !== 'name'}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="profile__data-item">
+                {edit !== 'name' ? (
+                  <button onClick={() => editHandler('name')}>
+                    <IconEdit color="#7b7b7b" />
+                  </button>
+                ) : (
+                  <button onClick={() => saveHandler()}>
+                    <IconSave color="#7b7b7b" />
+                  </button>
+                )}
+              </div>
+              <div className="profile__data-item">
+                <p className="profile__data-text-gray">Ваш адрес доставки: </p>
+              </div>
+              <div className="profile__data-item">
+                <input
+                  defaultValue={userData?.userAddress || ''}
+                  ref={addressRef}
+                  className="profile__input"
+                  type="text"
+                  readOnly={edit !== 'address'}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+              <div className="profile__data-item">
+                {edit !== 'address' ? (
+                  <button onClick={() => editHandler('address')}>
+                    <IconEdit color="#7b7b7b" />
+                  </button>
+                ) : (
+                  <button onClick={() => saveHandler()}>
+                    <IconSave color="#7b7b7b" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
         )}
-
         {userData?.orders ? (
           <div className="profile__orders">
             <h3 className="profile__subtitle">История заказов</h3>

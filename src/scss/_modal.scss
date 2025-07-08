@@ -1,10 +1,6 @@
 @use './variables.scss';
 
 .modal {
-  background-color: variables.$color-white;
-  width: 440px;
-  min-height: 400px;
-  padding: 20px 30px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12,7 +8,7 @@
   z-index: 10000;
   display: flex;
   flex-direction: column;
-  border-radius: 18px;
+  gap: 10px;
   &__overlay {
     position: fixed;
     top: 0;
@@ -21,6 +17,16 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+  }
+  &__main {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    width: 440px;
+    min-height: 400px;
+    background-color: variables.$color-white;
+    position: relative;
   }
   &__title {
     font-size: 32px;
@@ -62,7 +68,7 @@
     z-index: 1;
   }
   &__input {
-    padding: 10px 20px 10px 40px;
+    padding: 10px 20px 10px 35px;
     border: 1px solid variables.$color-gray-medium;
     border-radius: 8px;
     position: relative;

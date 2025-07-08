@@ -1,11 +1,11 @@
 import TheOrder from '@/components/TheOrder';
 import useCartStore from '@/stores/cartStore';
-import { useLoadUser } from '@/hooks/useLoadUser';
 import { Link } from 'react-router-dom';
+import useUserStore from '@/stores/userStore';
 
 export default function PageOrder() {
   const { cart } = useCartStore();
-  const { user } = useLoadUser();
+  const { user } = useUserStore();
 
   return cart.length > 0 && user ? (
     <TheOrder />

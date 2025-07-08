@@ -8,41 +8,43 @@ import PageNotFound from '@/components/PageNotFound';
 import PageOrderSuccess from '@/components/PageOrderSuccess';
 import PageProfile from '@/components/PageProfile';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    Component: App,
-    children: [
-      {
-        path: '',
-        Component: PageHome,
-      },
-      {
-        path: 'cart',
-        Component: PageCart,
-      },
-      {
-        path: 'order',
-        Component: PageOrder,
-      },
-      {
-        path: 'delivery',
-        Component: PageDelivery,
-      },
-      {
-        path: 'order-success',
-        Component: PageOrderSuccess,
-      },
-      {
-        path: 'profile',
-        Component: PageProfile,
-      },
-      {
-        path: '*',
-        Component: PageNotFound,
-      },
-    ],
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      Component: App,
+      children: [
+        {
+          path: '',
+          Component: PageHome,
+        },
+        {
+          path: 'cart',
+          Component: PageCart,
+        },
+        {
+          path: 'order',
+          Component: PageOrder,
+        },
+        {
+          path: 'delivery',
+          Component: PageDelivery,
+        },
+        {
+          path: 'order-success',
+          Component: PageOrderSuccess,
+        },
+        {
+          path: 'profile',
+          Component: PageProfile,
+        },
+        {
+          path: '*',
+          Component: PageNotFound,
+        },
+      ],
+    },
+  ],
+);
 
 export default router;

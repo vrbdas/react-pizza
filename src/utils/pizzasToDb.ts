@@ -5,7 +5,7 @@ import axios from "axios";
 const url = 'https://react-pizza-f1a05-default-rtdb.asia-southeast1.firebasedatabase.app/.json';
 
 async function pizzasToDb() {
-  const response = await axios.get('/pizzas.json');
+  const response = await axios.get('../../src/pizzas.json');
   const pizzas = await response.data;
   try {
     axios.patch(url, { catalog: pizzas });

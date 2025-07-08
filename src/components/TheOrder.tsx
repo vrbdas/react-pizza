@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import useUserStore from '@/stores/userStore';
 import { useLoadUser } from '@/hooks/useLoadUser';
 
 export default function TheOrder() {
@@ -17,11 +18,14 @@ export default function TheOrder() {
 
   const navigate = useNavigate();
 
-  const { user } = useLoadUser();
+  const { user, userData } = useUserStore();
 
   const [animationRef] = useAutoAnimate();
 
-  const url = 'https://react-pizza-f1a05-default-rtdb.asia-southeast1.firebasedatabase.app/.json';
+  const { reloadUserData } = useLoadUser();
+
+  const url =
+    'https://react-pizza-f1a05-default-rtdb.asia-southeast1.firebasedatabase.app';
 
   const totalPrice = (): number => {
     let sum = 0;
@@ -50,12 +54,12 @@ export default function TheOrder() {
 
   useEffect(() => {
     reset({
-      name: '',
+      name: userData?.userName || '',
       phone: user?.phoneNumber?.slice(2) || '',
-      address: '',
+      address: userData?.userAddress || '',
       comment: '',
     });
-  }, [user]); // значения по умолчанию из профиля или пустые
+  }, [user, userData]); // значения по умолчанию из профиля или пустые
 
   const [loading, setLoading] = useState(false);
 
@@ -64,17 +68,30 @@ export default function TheOrder() {
 
     const newOrderKey = Date.now().toString();
 
-    const orderData = { ...data, phone: `+7${data.phone}`, cart: [...cart] };
+    const orderData = {
+      name: data.name.trim().slice(0, 50),
+      phone: `+7${data.phone}`,
+      address: data.address.trim().slice(0, 100),
+      comment: data.comment.trim().slice(0, 200),
+      cart: [...cart],
+    };
 
     try {
-      axios.patch(url, { [`users/${user?.uid}/orders/${newOrderKey}`]: orderData });
+      if (!user) return;
+      
+      const token = await user.getIdToken();
+      await axios.patch(`${url}/.json?auth=${token}`, {
+        [`users/${user.uid}/orders/${newOrderKey}`]: orderData,
+      });
+
+      await reloadUserData(user); // чтобы сразу обновить заказы в профиле
+      reset();
+      clearCart();
+      navigate('/order-success');
     } catch (err) {
       console.log(err);
     }
 
-    reset();
-    navigate('/order-success');
-    clearCart();
     setLoading(false);
   };
 
@@ -98,6 +115,7 @@ export default function TheOrder() {
               <input
                 className="order-form__input"
                 type="text"
+                maxLength={50}
                 {...register('name', { required: 'Введите имя' })}
               />
               <div ref={animationRef}>
@@ -134,6 +152,7 @@ export default function TheOrder() {
               <input
                 className="order-form__input"
                 type="text"
+                maxLength={100}
                 {...register('address', { required: 'Введите адрес' })}
               />
               <div ref={animationRef}>
@@ -145,6 +164,7 @@ export default function TheOrder() {
             <label className="order-form__item order-form__comment">
               Комментарий к заказу
               <textarea
+                maxLength={200}
                 className="order-form__input order-form__comment-textarea"
                 {...register('comment')}
               ></textarea>

@@ -1,0 +1,32 @@
+@use './variables.scss';
+
+.test-attention {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: rgba($color: variables.$color-white, $alpha: 0.95);
+  width: 100%;
+  padding: 20px 30px;
+  h3 {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  p {
+    color: variables.$color-gray;
+  }
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+  }
+  strong {
+    color: variables.$color-black;
+    font-weight: 600;
+  }
+}

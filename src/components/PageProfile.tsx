@@ -1,13 +1,23 @@
 import TheProfile from '@/components/TheProfile';
-import { useLoadUser } from '@/hooks/useLoadUser';
 import { Link } from 'react-router-dom';
+import useUserStore from '@/stores/userStore';
 
 export default function PageProfile() {
-  const { user } = useLoadUser();
+  const { user, loading } = useUserStore();
 
-  return user ? (
-    <TheProfile />
-  ) : (
+  if (loading) {
+    return (
+      <div className="loader__wrapper">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
+  if (user) {
+    return <TheProfile />;
+  }
+
+  return (
     <section className="page-alert">
       <h2 className="page-alert__title">Вы не вошли в профиль</h2>
       <p className="page-alert__subtitle">

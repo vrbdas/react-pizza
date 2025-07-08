@@ -5,8 +5,8 @@ import useCartStore from '@/stores/cartStore';
 import useCatalogStore from '@/stores/catalogStore';
 import AppCartItem from '@/components/AppCartItem';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLoadUser } from '@/hooks/useLoadUser';
 import useAuthModalStore from '@/stores/authModalStore';
+import useUserStore from '@/stores/userStore';
 
 export default function TheCart() {
   const { cart, clearCart } = useCartStore();
@@ -14,7 +14,7 @@ export default function TheCart() {
 
   const { setAuthModal } = useAuthModalStore();
 
-  const { user } = useLoadUser();
+  const { user } = useUserStore();
 
   const navigate = useNavigate();
 

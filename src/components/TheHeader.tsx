@@ -5,17 +5,17 @@ import useCartStore from '@/stores/cartStore';
 import useCatalogStore from '@/stores/catalogStore';
 import IconDelivery from '@/icons/IconDelivery';
 import IconLogin from '@/icons/IconLogin';
-import { useLoadUser } from '@/hooks/useLoadUser';
 import { useLoadCatalog } from '@/hooks/useLoadCatalog';
 import useAuthModalStore from '@/stores/authModalStore';
+import useUserStore from '@/stores/userStore';
 
 export default function TheSiteHeader() {
   const cartStore = useCartStore();
   const catalogStore = useCatalogStore();
 
-  const { user } = useLoadUser();
-
   useLoadCatalog();
+
+  const { user } = useUserStore();
 
   const { setAuthModal } = useAuthModalStore();
 

@@ -37,9 +37,37 @@
     gap: 20px;
   }
   &__data-items {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-auto-rows: minmax(42px, 1fr);
+    gap: 20px;
+  }
+  &__data-item {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
+  }
+  &__data-text {
+    color: variables.$color-black;
+    padding: 10px 20px;
+  }
+  &__data-text-gray {
+    color: variables.$color-gray;
+    flex-shrink: 0;
+  }
+  &__input {
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid variables.$color-gray-medium;
+    border-radius: 8px;
+    position: relative;
+    color: variables.$color-black;
+    &:focus {
+      outline: none;
+    }
+    &:read-only {
+      border: none;
+    }
   }
   &__orders {
     display: flex;

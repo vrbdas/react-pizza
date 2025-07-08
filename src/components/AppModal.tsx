@@ -4,6 +4,9 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { auth } from '@/firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from 'firebase/auth';
 import useAuthModalStore from '@/stores/authModalStore';
+import { useLoadUser } from '@/hooks/useLoadUser';
+import { IMaskInput } from 'react-imask';
+import AppTestAttention from '@/components/AppTestAttention';
 
 type Inputs = {
   phone: string;
@@ -21,14 +24,16 @@ export default function AppModal() {
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<string | null>(null);
-
   const { setAuthModal } = useAuthModalStore();
+
+  const { reloadUserData } = useLoadUser();
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
   } = useForm<Inputs>();
 
   useEffect(() => {
@@ -87,7 +92,11 @@ export default function AppModal() {
     setLoading(true);
 
     try {
-      await confirmationResult.confirm(code);
+      // подтвердает код и получает user из результата подтверждения
+      const userCredential = await confirmationResult.confirm(code);
+
+      reloadUserData(userCredential.user); // сразу загружает пользователя, нужно если вход прямо со страницы профиля
+
       reset();
       setConfirmationResult(null);
       setAuthModal(false);
@@ -101,80 +110,92 @@ export default function AppModal() {
 
   return (
     <div className="modal__overlay">
+      <AppTestAttention />
       <div className="modal">
-        <div ref={animationRef} style={{ position: 'absolute', top: '0', left: '0' }}>
-          {alert && <div className="modal__alert">{alert}</div>}
-        </div>
-        <button className="modal-close" onClick={() => setAuthModal(false)}></button>
-        <h2 className="modal__title">Вход</h2>
-        <p className="modal__subtitle">
-          Войдите, чтобы сохранять адрес доставки и историю заказов — это поможет быстрее оформлять заказы в будущем.
-        </p>
-        <form id="modal-form" className="modal__form" onSubmit={handleSubmit(onSubmit)}>
-          <label className="modal__form-item">
-            Ваш номер телефона
-            <div className="modal__input-wrapper">
-              <span className="modal__input-prefix">+7</span>
-              <input
-                readOnly={!!confirmationResult}
-                autoComplete="off"
-                className="modal__input"
-                placeholder="XXXXXXXXXX"
-                maxLength={10}
-                {...register('phone', {
-                  required: 'Введите номер',
-                  validate: {
-                    checkFormat: (value) => /^[0-9]*$/.test(value) || 'Некорректный номер',
-                    checkLength: (value) => value.length === 10 || 'Номер слишком короткий',
-                  },
-                })}
-              />
-            </div>
-            <div ref={animationRef}>
-              {errors.phone && <span className="modal__form-error">{errors.phone.message}</span>}
-            </div>
-          </label>
-
-          {confirmationResult && (
+        <div className="modal__main">
+          <div ref={animationRef} style={{ position: 'absolute', top: '0', left: '0' }}>
+            {alert && <div className="modal__alert">{alert}</div>}
+          </div>
+          <button className="modal-close" onClick={() => setAuthModal(false)}></button>
+          <h2 className="modal__title">Вход</h2>
+          <p className="modal__subtitle">
+            Войдите, чтобы сохранять адрес доставки и историю заказов — это поможет быстрее
+            оформлять заказы в будущем.
+          </p>
+          <form id="modal-form" className="modal__form" onSubmit={handleSubmit(onSubmit)}>
             <label className="modal__form-item">
-              Код из SMS
-              <input
-                autoComplete="off"
-                className="modal__input modal__input-code"
-                placeholder="XXXXXX"
-                maxLength={6}
-                onFocus={() => setAlert(null)}
-                {...register('code', {
-                  required: 'Введите код',
-                  validate: {
-                    checkFormat: (value) =>
-                      (!!value && /^[0-9]*$/.test(value)) || 'Некорректный формат',
-                    checkLength: (value) =>
-                      (!!value && value.length === 6) || 'Код слишком короткий',
-                  },
-                })}
-              />
+              Ваш номер телефона
+              <div className="modal__input-wrapper">
+                <span className="modal__input-prefix">+7</span>
+                <IMaskInput
+                  mask="(000) 000-00-00"
+                  unmask={true} // сохраняет только цифры в form.phone
+                  onAccept={(value: string) => {
+                    setValue('phone', value, { shouldValidate: true });
+                  }}
+                  readOnly={!!confirmationResult}
+                  autoComplete="off"
+                  className="modal__input"
+                  placeholder="XXXXXXXXXX"
+                  maxLength={15}
+                  {...register('phone', {
+                    required: 'Введите номер',
+                    validate: {
+                      checkFormat: (value) => /^[0-9]*$/.test(value) || 'Некорректный номер',
+                      checkLength: (value) => value.length === 10 || 'Номер слишком короткий',
+                    },
+                  })}
+                  inputRef={(el) => {
+                    if (el) register('phone').ref(el); // передаёт DOM-элемент в react-hook-form
+                  }}
+                />
+              </div>
               <div ref={animationRef}>
-                {errors.code && <span className="modal__form-error">{errors.code.message}</span>}
+                {errors.phone && <span className="modal__form-error">{errors.phone.message}</span>}
               </div>
             </label>
-          )}
-        </form>
 
-        <button
-          type="submit"
-          form="modal-form"
-          className="btn btn-bw modal__btn"
-          disabled={loading}
-        >
-          {confirmationResult ? 'Подтвердить код' : 'Войти'}
-        </button>
+            {confirmationResult && (
+              <label className="modal__form-item">
+                Код из SMS
+                <input
+                  autoComplete="off"
+                  className="modal__input modal__input-code"
+                  placeholder="XXXXXX"
+                  maxLength={6}
+                  onFocus={() => setAlert(null)}
+                  {...register('code', {
+                    required: 'Введите код',
+                    validate: {
+                      checkFormat: (value) =>
+                        (!!value && /^[0-9]*$/.test(value)) || 'Некорректный формат',
+                      checkLength: (value) =>
+                        (!!value && value.length === 6) || 'Код слишком короткий',
+                    },
+                  })}
+                />
+                <div ref={animationRef}>
+                  {errors.code && <span className="modal__form-error">{errors.code.message}</span>}
+                </div>
+              </label>
+            )}
+          </form>
 
-        <p className="modal__personal">
-          Нажимая кнопку, вы соглашаетесь с обработкой личных данных.
-        </p>
+          <button
+            type="submit"
+            form="modal-form"
+            className="btn btn-bw modal__btn"
+            disabled={loading}
+          >
+            {confirmationResult ? 'Подтвердить код' : 'Войти'}
+          </button>
 
-        <div id="recaptcha-container"></div>
+          <p className="modal__personal">
+            Нажимая кнопку, вы соглашаетесь с обработкой личных данных.
+          </p>
+
+          <div id="recaptcha-container"></div>
+        </div>
       </div>
     </div>
   );
